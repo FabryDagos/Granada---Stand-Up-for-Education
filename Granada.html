@@ -1,0 +1,1447 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Granada - Stand Up for Education</title>
+<style>
+/* Font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    overflow-x: hidden;
+    padding-top: 90px;
+     background:
+        radial-gradient(
+            circle at right center,
+            rgba(36,50,107,0.25),
+            transparent 55%
+        ),
+        linear-gradient(
+            180deg,
+            #0E1118 0%,
+            #121826 40%,
+            #1A253D 100%
+        );
+}
+
+/* NAVBAR */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 90px;
+    background: radial-gradient(circle at 0% 0%, #24326b 0%, #1a253d 40%, #000000 100%);
+    color: #C0C0C0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    box-shadow: 0 8px 30px rgba(36, 50, 107, 0.6);
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(235, 98, 127, 0.2);
+    transition: border-bottom 0.3s ease, box-shadow 0.3s ease;
+}
+
+nav.scrolled {
+    border-bottom: 3px solid #eb627f;
+    box-shadow: 0 0 12px #eb627f, 0 0 30px rgba(235, 98, 127, 0.6);
+}
+
+nav .logo {
+    height: 60px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+nav .logo img {
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.9));
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+nav .logo img:hover {
+    transform: translateY(-2px) scale(1.03);
+    filter: drop-shadow(0 0 16px rgba(255,255,255,1));
+}
+
+/* Menu NAV centrato */
+nav .nav-menu {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 40px;
+}
+
+nav .nav-menu li {
+    margin: 0;
+}
+
+nav .nav-menu a {
+    position: relative;
+    color: #E0E0E0;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: color 0.25s ease, transform 0.25s ease;
+    white-space: nowrap;
+}
+
+/* Underline animata */
+nav .nav-menu a::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -6px;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #eb627f, #24326b);
+    border-radius: 999px;
+    transform: translateX(-50%);
+    transition: width 0.25s ease;
+}
+
+nav .nav-menu a:hover {
+    color: #FFFFFF;
+    transform: translateY(-1px);
+}
+
+nav .nav-menu a:hover::after {
+    width: 80%;
+}
+
+nav .nav-menu a.active {
+    color: #eb627f;
+}
+
+nav .nav-menu a.active::after {
+    width: 100%;
+}
+
+/* Timeline */
+.timeline {
+    position: fixed;
+    left: 30px;
+    top: 0;
+    width: 80px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 900;
+}
+
+@keyframes shimmer {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.timeline-line {
+    position: absolute;
+    left: 30px;
+    width: 6px;
+    height: 0;
+    background: linear-gradient(-45deg, #eb627f, #24326b, #eb627f, #24326b);
+    background-size: 400% 400%;
+    border-radius: 3px;
+    box-shadow: 0 0 20px rgba(235, 98, 127, 0.8);
+    z-index: 1;
+    transform-origin: top;
+    transition: height 0.2s ease-out, top 0.2s ease-out;
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+.timeline-bus {
+    position: absolute;
+    left: 4px;
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #eb627f, #c8506a);
+    border-radius: 50% 50% 60% 40%;
+    box-shadow:
+        0 6px 16px rgba(235, 98, 127, 0.9),
+        inset 0 2px 4px rgba(255,255,255,0.3);
+    z-index: 3;
+    opacity: 0;
+    transform: translateY(-50%) scale(0.8);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    animation: busBounce 1.5s ease-in-out infinite;
+}
+
+.timeline-bus::before {
+    content: '🚌';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 22px;
+    z-index: 4;
+}
+
+@keyframes busBounce {
+    0%, 100% { transform: translateY(-50%) scale(0.9); }
+    50% { transform: translateY(-58%) scale(1.08); }
+}
+
+.timeline-bus.active {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.05);
+}
+
+.timeline-point {
+    position: absolute;
+    left: 14px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 3px solid #C0C0C0;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: #2F2F2F;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.timeline-point::before {
+    content: "";
+    position: absolute;
+    inset: -10px;
+    border-radius: inherit;
+    background: conic-gradient(from 0deg, rgba(235,98,127,0.6), transparent 60%);
+    opacity: 0;
+    transition: all 0.3s ease;
+    transform: rotate(-90deg) scale(0.8);
+    z-index: -1;
+}
+
+.timeline-point::after {
+    content: attr(data-label);
+    position: absolute;
+    left: 42px;
+    white-space: nowrap;
+    background: linear-gradient(135deg, #2F2F2F, #1a1a1a);
+    color: #FFFFFF;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    opacity: 0;
+    transform: translateY(8px) rotateX(10deg) scale(0.95);
+    pointer-events: none;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.timeline-point.active {
+    background: linear-gradient(135deg, #eb627f, #c8506a);
+    border-color: #24326b;
+    transform: scale(1.15) rotate(360deg);
+    box-shadow: 0 12px 28px rgba(235, 98, 127, 0.6);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 12px 28px rgba(235, 98, 127, 0.6); }
+    50% { box-shadow: 0 12px 36px rgba(235, 98, 127, 0.9); }
+}
+
+.timeline-point:hover {
+    transform: scale(1.3) !important;
+    border-color: #24326b;
+    background: linear-gradient(135deg, #eb627f, #c8506a);
+}
+
+.timeline-point:hover::before {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.timeline-point:hover::after {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg) scale(1);
+}
+
+/* STRADA LATERALE */
+.road-image {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.road-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.timeline {
+    z-index: 5;
+}
+
+/* Sezioni */
+section {
+    max-width: 900px;
+    margin: auto;
+    padding: 40px 20px 60px 120px;
+    position: relative;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+section.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+section h2 {
+    text-align: center;
+    margin-bottom: 60px;
+    font-size: 2.5rem;
+    color: #2F2F2F;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease-out 0.2s;
+}
+
+section.animate-in h2 {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+section.fermata {
+    background-color: #f7f7f7;
+    border-left: 4px solid #C0C0C0;
+    padding-left: 40px;
+}
+
+.block {
+    display: flex;
+    align-items: center;
+    margin-bottom: 60px;
+    flex-wrap: wrap;
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: all 0.6s ease-out;
+}
+
+/* ====== BLOCCO CARD AVANZATO ====== */
+section.fermata .block {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 28px;
+    align-items: stretch;
+    margin-bottom: 40px;
+    padding: 22px 24px;
+    border-radius: 22px;
+
+    /* 🔥 SFUMATURA LOGO SEMPRE VISIBILE */
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(235,98,127,0.25),
+            transparent 45%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            rgba(36,50,107,0.30),
+            transparent 55%
+        ),
+        linear-gradient(
+            145deg,
+            rgba(18,24,38,0.95),
+            rgba(14,17,24,0.98)
+        );
+
+    border: 1px solid rgba(235,98,127,0.18);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    box-shadow:
+        0 18px 45px rgba(0,0,0,0.65),
+        0 0 0 1px rgba(36,50,107,0.18);
+
+    overflow: hidden;
+
+    transform: translateY(16px);
+    opacity: 0;
+    transition:
+        transform 0.45s cubic-bezier(0.19, 1, 0.22, 1),
+        box-shadow 0.45s ease,
+        border-color 0.45s ease,
+        background 0.45s ease,
+        opacity 0.45s ease;
+}
+
+
+/* ingresso quando la sezione è visibile */
+section.animate-in .block {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* glow decorativo */
+section.fermata .block::before {
+    content: "";
+    position: absolute;
+    inset: -40%;
+    background:
+        radial-gradient(circle at 0% 0%, rgba(235,98,127,0.35), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(36,50,107,0.30), transparent 55%);
+    opacity: 0;
+    transition: opacity 0.45s ease;
+    pointer-events: none;
+}
+
+/* hover card */
+section.fermata .block:hover {
+    transform: translateY(-6px);
+    box-shadow:
+        0 26px 60px rgba(0,0,0,0.85),
+        0 0 0 1px rgba(235,98,127,0.45);
+
+    border-color: rgba(235,98,127,0.6);
+
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(235,98,127,0.40),
+            transparent 45%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            rgba(36,50,107,0.45),
+            transparent 55%
+        ),
+        linear-gradient(
+            145deg,
+            rgba(26,37,61,0.98),
+            rgba(18,24,38,1)
+        );
+}
+
+section.fermata .block::before {
+    background:
+        radial-gradient(circle at 0% 0%, rgba(235,98,127,0.45), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(36,50,107,0.45), transparent 55%);
+}
+
+
+/* Alternanza sinistra/destra */
+.block:nth-of-type(odd) .text { order: 1; text-align: left; }
+.block:nth-of-type(odd) img  { order: 2; }
+.block:nth-of-type(even) .text { order: 2; text-align: right; }
+.block:nth-of-type(even) img  { order: 1; }
+
+/* contenitore testo */
+.block .text {
+    width: 100%;
+    padding: 6px 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* ====== TITOLO ====== */
+.block .text h3 {
+    position: relative;
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+
+    /* gradient text */
+    background: linear-gradient(
+        90deg,
+        #ffffff,
+        #eb627f
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+        opacity 0.45s ease,
+        transform 0.45s ease;
+}
+
+/* linea decorativa sotto il titolo */
+.block .text h3::after {
+    content: "";
+    display: block;
+    width: 36px;
+    height: 2px;
+    margin-top: 6px;
+    border-radius: 2px;
+
+    background: linear-gradient(
+        90deg,
+        #eb627f,
+        transparent
+    );
+
+    opacity: 0.7;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.45s ease;
+}
+
+/* ====== PARAGRAFO ====== */
+.block .text p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    letter-spacing: 0.2px;
+    color: #d6d6d6;
+
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+        opacity 0.55s ease,
+        transform 0.55s ease;
+}
+
+/* ====== ANIMAZIONE INGRESSO TESTO ====== */
+section.animate-in .block .text h3,
+section.animate-in .block .text p {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* delay elegante */
+section.animate-in .block .text h3 {
+    transition-delay: 0.25s;
+}
+section.animate-in .block .text p {
+    transition-delay: 0.35s;
+}
+
+/* ====== HOVER TESTO ====== */
+.block:hover .text h3::after {
+    transform: scaleX(1);
+}
+
+/* leggero highlight sul testo al hover */
+.block:hover .text p {
+    color: #f0f0f0;
+}
+
+.block img {
+    width: 100%;
+    height: 230px;
+    border-radius: 18px;
+    object-fit: cover;
+
+    transform: scale(1.02);
+    filter: saturate(1.1) contrast(1.05);
+
+    box-shadow: 0 16px 34px rgba(0,0,0,0.7);
+
+    transition:
+        transform 0.5s cubic-bezier(0.19, 1, 0.22, 1),
+        box-shadow 0.5s ease,
+        filter 0.5s ease;
+}
+
+.block:hover img {
+    transform: scale(1.06);
+    filter: saturate(1.25) contrast(1.1);
+    box-shadow: 0 26px 55px rgba(0,0,0,0.9);
+}
+
+/* ====== DELAY ENTRATA PROGRESSIVA ====== */
+section.animate-in .block:nth-of-type(1) { transition-delay: 0.15s; }
+section.animate-in .block:nth-of-type(2) { transition-delay: 0.25s; }
+section.animate-in .block:nth-of-type(3) { transition-delay: 0.35s; }
+section.animate-in .block:nth-of-type(4) { transition-delay: 0.45s; }
+
+/* Hero e CTA */
+header {
+    background: url('INSERISCI_QUI_IMMAGINE_HERO') no-repeat center center/cover;
+    color: white;
+    text-align: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 90px;
+}
+
+header h1 { font-size: 3rem; margin: 0; }
+header p  { font-size: 1.5rem; margin: 20px 0; }
+
+.cta-button {
+    background-color: #C0C0C0;
+    color: #2F2F2F;
+    padding: 15px 30px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: #2F2F2F;
+    color: #C0C0C0;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+/* BARRA BUS */
+.bus-bar {
+    width: 100%;
+    height: 70px;
+    background: linear-gradient(135deg, #eb627f 0%, #c8506a 50%, #24326b 100%);
+    background-size: 300% 300%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    position: relative;
+    border-radius: 0px;
+    margin-bottom: 0px;
+    cursor: pointer;
+    overflow: hidden;
+    box-shadow: 
+        0 12px 40px rgba(235, 98, 127, 0.4),
+        inset 0 1px 0 rgba(255,255,255,0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    backdrop-filter: blur(10px);
+    animation: gradientMove 8s ease infinite;
+}
+
+.bus-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.6s;
+}
+
+.bus-bar:hover::before {
+    left: 100%;
+}
+
+.bus-bar:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 
+        0 20px 60px rgba(235, 98, 127, 0.6),
+        0 0 30px rgba(36, 50, 107, 0.4),
+        inset 0 1px 0 rgba(255,255,255,0.4);
+}
+
+.bus-icon {
+    position: absolute;
+    left: 30px;
+    font-size: 32px;
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    animation: busFloat 3s ease-in-out infinite;
+}
+
+.bus-text {
+    font-size: 22px;
+    letter-spacing: 2px;
+}
+
+@keyframes busFloat {
+    0%, 100% { transform: translateY(0px) rotate(-2deg); }
+    50% { transform: translateY(-4px) rotate(2deg); }
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.hero-background {
+    width: 100%;
+    height: 600px;
+    background: url(foto.jpeg) no-repeat center/cover;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    padding-top: 90px;
+}
+
+.hero-background + .bus-bar {
+    margin-top: 0 !important;
+}
+
+/* Footer */
+footer {
+    background: radial-gradient(circle at top left, #24326b, #1a253d);
+    color: #d0d0d0;
+    padding: 15px 20px;
+    font-family: "Roboto", sans-serif;
+    box-shadow: inset 0 15px 30px rgba(0,0,0,0.7);
+    border-top: 1px solid rgba(235,98,127,0.2);
+}
+
+.footer-container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 80px;
+    text-align: left;
+}
+
+.footer-col {
+    flex: 0 0 280px;
+    min-width: 280px;
+}
+
+.footer-col h4,
+.footer-col h3 {
+    color: #eb627f;
+    margin-bottom: 12px;
+    font-size: 1.3rem;
+    position: relative;
+}
+
+.footer-col h4::after,
+.footer-col h3::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 40px;
+    height: 3px;
+    background: linear-gradient(90deg, #eb627f, #24326b);
+    border-radius: 2px;
+}
+
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-col ul li {
+    margin: 10px 0;
+}
+
+.footer-col a {
+    color: #d0d0d0;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    position: relative;
+    padding-left: 2px;
+}
+
+.footer-col a:hover {
+    color: #eb627f;
+    text-shadow: 0 0 12px rgba(235, 98, 127, 0.6);
+    transform: translateX(4px);
+}
+
+.brand p {
+    margin-top: 12px;
+    line-height: 1.5;
+}
+
+.footer-social {
+    margin-top: 15px;
+    display: flex;
+    gap: 12px;
+}
+
+.footer-social a {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(235,98,127,0.3);
+    padding: 8px 10px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    transition: all 0.3s;
+}
+
+.footer-social a:hover {
+    background: linear-gradient(135deg, #eb627f, #24326b);
+    color: #ffffff;
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(235, 98, 127, 0.6);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+        text-align: center;
+    }
+    
+    .footer-col {
+        flex: none;
+        max-width: 300px;
+    }
+}
+
+@media(max-width: 768px){
+    nav {
+        padding: 0 20px;
+        height: 70px;
+    }
+    nav .logo {
+        height: 45px;
+    }
+    nav .nav-menu {
+        gap: 24px;
+        font-size: 14px;
+    }
+    section {
+        padding-left: 50px;
+    }
+    .block {
+        flex-direction: column;
+        text-align: center;
+    }
+    .block .text, .block img {
+        width: 100%;
+        order: unset !important;
+    }
+    .timeline {
+        display: none;
+    }
+}
+
+/* Brochure button - VERSIONE SOTTILE */
+/* Brochure button – stile grande e moderno */
+.brochure-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;      /* ridotto rispetto a prima */
+    font-size: 13px;  
+    font-weight: 700;
+    letter-spacing: 1.3px;
+    text-transform: uppercase;
+    color: #fff;
+    background: linear-gradient(135deg, #eb627f, #c8506a);
+    border: none;
+    border-radius: 16px;       /* arrotondato elegante */
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 12px 30px rgba(235, 98, 127, 0.6);
+    transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    line-height: 1.2;
+}
+
+/* Hover animato */
+.brochure-button:hover {
+    transform: translateY(-6px) scale(1.05);
+    box-shadow:
+        0 18px 45px rgba(235,98,127,0.7),
+        0 0 25px rgba(36,50,107,0.4);
+    background: linear-gradient(135deg, #c8506a, #eb627f);
+}
+
+/* Alternanza corretta testo / immagine */
+.block:nth-of-type(odd) .text {
+    order: 1;
+    text-align: left;   /* testo a sinistra */
+}
+
+.block:nth-of-type(odd) img {
+    order: 2;
+}
+
+.block:nth-of-type(even) img {
+    order: 1;
+}
+
+.block:nth-of-type(even) .text {
+    order: 2;
+    text-align: right;  /* testo a destra */
+}
+
+/* Titoli cliccabili con stile hover */
+.section-title {
+    color: #2F2F2F !important;
+    text-decoration: none !important;
+    position: relative;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.section-title:hover {
+    color: #eb627f !important;
+    transform: translateY(-2px);
+    text-shadow: 0 2px 8px rgba(235, 98, 127, 0.3);
+}
+
+.section-title::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #eb627f, #24326b);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.section-title:hover::after {
+    width: 60%;
+}
+
+
+/* ===== SCRIVICI – VERSIONE MODERNA ===== */
+.contact-modern {
+    background: linear-gradient(135deg, #f7f7f7, #ededed);
+    border-left: 4px solid #eb627f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact-card {
+    max-width: 700px;
+    width: 100%;
+    padding: 50px 40px;
+    background: rgba(255,255,255,0.75);
+    border-radius: 24px;
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.15),
+        inset 0 1px 0 rgba(255,255,255,0.6);
+    backdrop-filter: blur(14px);
+    text-align: center;
+    transform: translateY(30px);
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+section.animate-in .contact-card {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.contact-header h2 {
+    color: #eb627f;
+    text-shadow: 0 0 12px rgba(235, 98, 127, 0.35);
+}
+
+.contact-icon {
+    font-size: 42px;
+    display: inline-block;
+    margin-bottom: 15px;
+    animation: floatIcon 3s ease-in-out infinite;
+}
+
+@keyframes floatIcon {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+.contact-header p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+    max-width: 520px;
+    margin: 0 auto 35px;
+}
+
+.contact-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+}
+
+.contact-cta {
+    background: linear-gradient(135deg, #eb627f, #c8506a);
+    color: white;
+    padding: 16px 42px;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    box-shadow: 0 10px 30px rgba(235,98,127,0.45);
+    transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.contact-cta:hover {
+    transform: translateY(-6px) scale(1.05);
+    box-shadow:
+        0 18px 45px rgba(235,98,127,0.7),
+        0 0 25px rgba(36,50,107,0.4);
+}
+
+.contact-alt {
+    font-size: 0.95rem;
+    color: #555;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.contact-alt a {
+    color: #24326b;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.contact-alt a:hover {
+    color: #eb627f;
+    text-shadow: 0 0 10px rgba(235,98,127,0.4);
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .contact-card {
+        padding: 40px 25px;
+    }
+
+    .contact-header h2 {
+        font-size: 2rem;
+    }
+}
+
+
+</style>
+</head>
+<body>
+
+<div class="road-image">
+    <img src="strada.jpg" alt="Strada lato sinistro" id="roadImg">
+</div>
+
+<nav>
+    <div class="logo">
+        <img src="Logo.png" alt="Stand Up for Education">
+    </div>
+    <ul class="nav-menu">
+    <li><a href="perche-granada.html">Perché Granada</a></li>
+    <li><a href="stage-linguistico.html">Stage linguistico</a></li>
+    <li><a href="erasmus.html">Erasmus+</a></li>
+    <li><a href="https://standupeducation.es/contacto">Scrivici</a></li>
+</ul>
+
+</nav>
+
+<div class="timeline">
+    <div class="timeline-line" id="timelineLine"></div>
+    <div class="timeline-bus" id="timelineBus"></div>
+    <div class="timeline-point" data-section="perche-granada" data-label="Perché Granada">1</div>
+    <div class="timeline-point" data-section="esperienze" data-label="Stage linguistico">2</div>
+    <div class="timeline-point" data-section="erasmus" data-label="Erasmus+">3</div>
+    <div class="timeline-point" data-section="prenota" data-label="Scrivici">4</div>
+</div>
+
+<div class="hero-background"></div>
+
+<header style="display: none;"></header>
+
+<div class="bus-bar" onclick="goToSection()">
+      <span class="bus-icon">🚌</span>
+      <span class="bus-text">Inizia il percorso</span>
+</div>
+
+<section id="perche-granada" class="fermata">
+    <h2><a href="perche-granada.html" class="section-title">Perché scegliere Granada?</a></h2>
+
+    <!-- 1. Valore didattico -->
+    <div class="block">
+        <div class="text">
+            <h3>Patrimonio culturale unico</h3>
+            <p>Granada è un laboratorio a cielo aperto dove storia, arte e cultura si intrecciano: dall'Alhambra ai quartieri storici, ogni visita diventa una vera lezione sul campo</p>
+        </div>
+        <img src="citta.jpg" alt="Studenti in visita all'Alhambra">
+    </div>
+
+    <!-- 2. Full immersion linguistica -->
+    <div class="block">
+        <div class="text">
+            <h3>Full immersion nella lingua</h3>
+            <p>La città è a misura di studente e permette di praticare lo spagnolo ogni giorno in contesti reali e sicuri</p>
+        </div>
+        <img src="comunicazione.jpg" alt="Lezione di spagnolo con studenti">
+    </div>
+
+    <!-- 3. Sicurezza e vivibilità per gruppi -->
+    <div class="block">
+        <div class="text">
+            <h3>Città sicura e accogliente</h3>
+            <p>Granada è facilmente gestibile per i docenti accompagnatori: dimensioni contenute e servizi efficienti</p>
+        </div>
+        <img src="sicurezza.jpg" alt="Gruppo scolastico che passeggia per il centro di Granada">
+    </div>
+
+    <!-- 4. Esperienza formativa completa -->
+    <div class="block">
+        <div class="text">
+            <h3>Esperienza formativa completa</h3>
+            <p>Lezioni, attività culturali e tempo libero strutturato creano un percorso che unisce competenze linguistiche e spirito di gruppo</p>
+        </div>
+        <img src="istruzione.jpeg" alt="Attività di gruppo e laboratorio per studenti">
+    </div>
+</section>
+
+
+<section id="esperienze" class="fermata">
+    <h2><a href="stage-linguistico.html" class="section-title">Stage linguistico</a></h2>
+
+    <div class="block">
+        <div class="text">
+            <h3>Lezioni di spagnolo</h3>
+            <p>Studia la lingua con insegnanti qualificati e in scuole certificate, vivendo in questa maniera un'esperienza immersiva completa</p>
+        </div>
+        <img src="lezione.jpg" alt="INSERISCI_QUI_IMMAGINE_LEZIONI">
+    </div>
+
+    <div class="block">
+        <div class="text">
+            <h3>Attività pomeridiane</h3>
+            <p>I programmi includono visite guidate in siti storici insieme a delle esperienze culturali e di divertimento</p>
+        </div>
+        <img src="visite.jpg" alt="INSERISCI_QUI_IMMAGINE_FLAMENCO">
+    </div>
+
+    <div class="block">
+        <div class="text">
+            <h3>Sistemazione</h3>
+            <p>Soggiorna presso famiglie ospitanti, in maniera tale da vivere la quotidianità spagnola</p>
+        </div>
+        <img src="soggiorno.jpg" alt="INSERISCI_QUI_IMMAGINE_SISTEMAZIONE">
+    </div>
+
+<!-- Sostituisci l'ultimo blocco della sezione "esperienze" con questo: -->
+<div class="block">
+    <!-- Bottone brochure a SINISTRA (order:1 per odd, order:2 per even) -->
+    <a href="SCHEDA_ES_GRANADA_2026.pdf" download="SCHEDA_ES_GRANADA_2026.pdf" class="brochure-button">
+        📥 Scarica Brochure Granada
+    </a>
+    
+    <!-- Testo a DESTRA -->
+    <div class="text">
+        <h3>Scelta del programma</h3>
+        <p>Seleziona il percorso educativo più adatto ai tuoi interessi e obiettivi di apprendimento. Scopri tutti i dettagli nel nostro brochure ufficiale</p>
+    </div>
+</div>
+
+</section>
+
+<!-- Sostituisci la sezione Erasmus+ completa con questa: -->
+<section id="erasmus" class="fermata">
+    <h2><a href="erasmus.html" class="section-title">Erasmus+</a></h2>
+    
+    <!-- 1. Mobilità per docenti e studenti -->
+    <div class="block">
+        <div class="text">
+            <h3>Mobilità per docenti</h3>
+            <p>Stand Up for Education supporta scuole e docenti nella progettazione di mobilità Erasmus+, offrendo percorsi di formazione all’estero che combinano aggiornamento professionale, scambio di buone pratiche e osservazione sul campo in contesti educativi internazionali</p>
+        </div>
+        <img src="er.jpg" alt="Insegnanti in formazione Erasmus+">
+    </div>
+    
+    <!-- 2. Programmi per scuole -->
+    <div class="block">
+        <div class="text">
+            <h3>Progetti per scuole</h3>
+            <p> I progetti Erasmus+ permettono agli istituti di sviluppare partenariati europei, integrare l’internazionalizzazione nel curriculum e offrire agli studenti esperienze di apprendimento in lingua in ambienti reali e sicuri</p>
+        </div>
+        <img src="studio.jpg" alt="Studenti in scambio Erasmus+">
+    </div>
+    
+    <!-- 3. Integrazione linguistica -->
+    <div class="block">
+        <div class="text">
+            <h3>Miglioramento competenze linguistiche</h3>
+            <p>Esperienze di immersione in lingua, attraverso attività pratiche e contesti autentici</p>
+        </div>
+        <img src="com.jpg" alt="Lezioni di inglese per Erasmus+">
+    </div>
+    
+    <!-- 4. Supporto completo -->
+    <div class="block">
+        <div class="text">
+            <h3>Assistenza completa</h3>
+            <p>Il team di Stand Up for Education affianca scuole e coordinatori Erasmus+ in tutte le fasi del progetto: dalla definizione del programma formativo alla gestione logistica, con un’attenzione particolare alla sicurezza e alla qualità dell’esperienza</p>
+        </div>
+        <img src="assistenza.jpg" alt="Supporto progetti Erasmus+">
+    </div>
+</section>
+
+<section id="prenota" class="fermata contact-modern">
+    <div class="contact-card">
+        <div class="contact-header">
+            <span class="contact-icon">✉️</span>
+            <h2>Scrivici</h2>
+            <p>
+                Vuoi scoprire Granada o hai domande sul viaggio studio? Scrivici e ti risponderemo al più presto.
+            </p>
+        </div>
+
+        <div class="contact-actions">
+            <a href="https://standupeducation.es/contacto" class="contact-cta">
+                Richiedi informazioni
+            </a> 
+    </div>
+</section>
+
+
+<script>
+  function goToSection(){
+    document.getElementById("perche-granada").scrollIntoView({
+      behavior: 'smooth'
+    });
+  }
+</script>
+
+<footer>
+  <div class="footer-container">
+    <div class="footer-col brand">
+      <h3>Stand Up for Education</h3>
+      <p>Viaggi studio e esperienze reali all'estero che uniscono cultura e apprendimento linguistico.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contatti</h4>
+      <ul>
+        <li><a href="mailto:hello@standupeducation.es">📩 hello@standupeducation.es</a></li>
+        <li><a href="tel:+34858701273">📞 +34 858 701 273</a></li>
+        <li><a href="https://standupeducation.es" target="_blank">🌐 standupeducation.es</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+const sections = document.querySelectorAll('section.fermata');
+const points = document.querySelectorAll('.timeline-point');
+const timelineLine = document.getElementById('timelineLine');
+const timelineBus = document.getElementById('timelineBus');
+const menuLinks = document.querySelectorAll('nav .nav-menu a');
+
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -10% 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
+        }
+    });
+}, observerOptions);
+
+sections.forEach(section => observer.observe(section));
+
+menuLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        const targetId = link.getAttribute('href').substring(1);
+        const target = document.getElementById(targetId);
+        if (!target) return;
+
+        e.preventDefault();
+
+        const NAV_HEIGHT = 90;
+        const targetTop = target.offsetTop - NAV_HEIGHT - 20;
+
+        window.scrollTo({
+            top: targetTop,
+            behavior: 'smooth'
+        });
+    });
+});
+
+function highlightNavbarByBus() {
+    const busRect = timelineBus.getBoundingClientRect();
+    const busCenterY = busRect.top + busRect.height / 2;
+    
+    points.forEach((point, index) => {
+        const pointRect = point.getBoundingClientRect();
+        const pointCenterY = pointRect.top + pointRect.height / 2;
+        
+        if (Math.abs(busCenterY - pointCenterY) < 15) {
+            menuLinks.forEach(link => link.classList.remove('active'));
+            if (menuLinks[index]) {
+                menuLinks[index].classList.add('active');
+            }
+            return;
+        }
+    });
+}
+
+function activatePoint() {
+    let scrollY = window.scrollY + window.innerHeight / 2;
+    sections.forEach((section, index) => {
+        const sectionTop = section.offsetTop;
+        const sectionBottom = sectionTop + section.offsetHeight;
+        if (scrollY >= sectionTop && scrollY < sectionBottom) {
+            points.forEach(p => p.classList.remove('active'));
+            if (points[index]) {
+                points[index].classList.add('active');
+            }
+        }
+    });
+}
+
+function updateTimeline() {
+    const NAV_HEIGHT = 90;
+    const firstSectionTop = sections[0].offsetTop;
+    const lastSectionBottom = sections[sections.length - 1].offsetTop + 
+                             sections[sections.length - 1].offsetHeight;
+
+    const totalPath = lastSectionBottom - firstSectionTop;
+    const scrollProgress = Math.max(0, Math.min(1, 
+        (window.scrollY + window.innerHeight - firstSectionTop) / totalPath
+    ));
+
+    const startInViewport = firstSectionTop - window.scrollY;
+    const topPos = Math.max(startInViewport, NAV_HEIGHT);
+    const visiblePathHeight = Math.min(lastSectionBottom - window.scrollY, window.innerHeight) - topPos;
+    const lineHeight = Math.max(0, scrollProgress * visiblePathHeight);
+
+    if (lineHeight > 0) {
+        timelineLine.style.top = topPos + 'px';
+        timelineLine.style.height = lineHeight + 'px';
+    } else {
+        timelineLine.style.height = '0';
+    }
+
+    const busPosition = topPos + (lineHeight * scrollProgress);
+    timelineBus.style.top = busPosition + 'px';
+    timelineBus.classList.toggle('active', lineHeight > 20);
+
+    highlightNavbarByBus();
+
+    sections.forEach((section, index) => {
+        const h2 = section.querySelector('h2');
+        if (!h2 || !points[index]) return;
+
+        const h2TopDoc = h2.getBoundingClientRect().top + window.scrollY;
+        const h2InViewport = h2TopDoc - window.scrollY;
+
+        if (h2InViewport >= NAV_HEIGHT && h2InViewport <= window.innerHeight - 40) {
+            points[index].style.top = (h2InViewport - 16) + 'px';
+            points[index].style.opacity = '1';
+        } else {
+            points[index].style.opacity = '0';
+        }
+    });
+}
+
+window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    const scrollY = window.scrollY;
+    
+    if(scrollY > 30) {
+        nav.classList.add('scrolled');
+    } else {
+        nav.classList.remove('scrolled');
+    }
+
+    activatePoint();
+    updateTimeline();
+});
+
+window.addEventListener('load', () => {
+    activatePoint();
+    updateTimeline();
+});
+window.addEventListener('resize', updateTimeline);
+</script>
+
+<script>
+function updateHeroHeight() {
+    const heroCover = document.querySelector('.hero-cover');
+    const busBar = document.querySelector('.bus-bar');
+    const firstSection = document.getElementById('perche-granada');
+    
+    if (heroCover && busBar && firstSection) {
+        const navbarHeight = 90;
+        const busBarHeight = busBar.offsetHeight;
+        const firstSectionTop = firstSection.offsetTop;
+        const exactSpace = firstSectionTop - navbarHeight - busBarHeight;
+        heroCover.style.height = exactSpace + 'px';
+    }
+}
+
+window.addEventListener('load', updateHeroHeight);
+window.addEventListener('resize', updateHeroHeight);
+</script>
+
+<script>
+function updateRoad() {
+    const roadDiv = document.querySelector('.road-image');
+    const roadImg = document.getElementById('roadImg');
+    const startSection = document.getElementById("perche-granada");
+    const footer = document.querySelector("footer");
+
+    const startTop = startSection.offsetTop;
+    const endBottom = footer.offsetTop;
+    roadDiv.style.top = startTop + "px";
+    roadDiv.style.height = (endBottom - startTop) + "px";
+
+    const firstSectionLeft = startSection.getBoundingClientRect().left;
+    roadDiv.style.width = firstSectionLeft + "px";
+
+    roadImg.style.height = (endBottom - startTop) + "px";
+}
+window.addEventListener('load', updateRoad);
+window.addEventListener('resize', updateRoad);
+</script>
+
+</body>
+</html>
+
+

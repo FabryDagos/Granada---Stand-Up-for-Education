@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Template Pagina - Stand Up for Education</title>
+<style>
+/* COPIA TUTTO IL CSS DALLA PAGINA ORIGINALE QUI */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+html { scroll-behavior: smooth; }
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    overflow-x: hidden;
+    padding-top: 90px;
+    background: radial-gradient(
+        circle at 0% 0%,
+        #24326b 0%,
+        #1a253d 40%,
+        #000000 100%
+    );
+}
+
+
+/* NAVBAR - MODIFICATA PER NAVIGAZIONE MULTIPAGINA */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 90px;
+    background: radial-gradient(circle at 0% 0%, #24326b 0%, #1a253d 40%, #000000 100%);
+    color: #C0C0C0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    box-shadow: 0 8px 30px rgba(36, 50, 107, 0.6);
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(235, 98, 127, 0.2);
+    transition: border-bottom 0.3s ease, box-shadow 0.3s ease;
+}
+
+nav.scrolled {
+    border-bottom: 3px solid #eb627f;
+    box-shadow: 0 0 12px #eb627f, 0 0 30px rgba(235, 98, 127, 0.6);
+}
+
+nav .logo {
+    height: 60px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+}
+
+nav .logo img {
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.9));
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+nav .logo img:hover {
+    transform: translateY(-2px) scale(1.03);
+    filter: drop-shadow(0 0 16px rgba(255,255,255,1));
+}
+
+nav .nav-menu {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 40px;
+}
+
+nav .nav-menu li { margin: 0; }
+
+nav .nav-menu a {
+    position: relative;
+    color: #E0E0E0;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: color 0.25s ease, transform 0.25s ease;
+    white-space: nowrap;
+}
+
+nav .nav-menu a::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -6px;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #eb627f, #24326b);
+    border-radius: 999px;
+    transform: translateX(-50%);
+    transition: width 0.25s ease;
+}
+
+nav .nav-menu a:hover {
+    color: #FFFFFF;
+    transform: translateY(-1px);
+}
+
+nav .nav-menu a:hover::after { width: 80%; }
+
+nav .nav-menu a.active {
+    color: #eb627f;
+}
+
+nav .nav-menu a.active::after { width: 100%; }
+
+/* SEZIONI PRINCIPALI */
+
+.cta-button {
+    background: linear-gradient(135deg, #eb627f, #c8506a);
+    color: white;
+    padding: 18px 40px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(235, 98, 127, 0.4);
+}
+
+.cta-button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(235, 98, 127, 0.6);
+}
+
+section.fermata {
+    max-width: 830px;
+    margin: 0 auto;
+    padding: 80px 20px 60px 120px;
+    background-color: #f7f7f7;
+    border-left: 4px solid #C0C0C0;
+    position: relative;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+section.fermata.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+section h2 {
+    text-align: center;
+    margin-bottom: 60px;
+    font-size: 2.5rem;
+    color: #2F2F2F;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease-out 0.2s;
+}
+
+section.animate-in h2 {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* TITOLI CLICCABILI */
+.section-link {
+    position: relative;
+}
+
+.section-link a {
+    color: #2F2F2F !important;
+    text-decoration: none !important;
+    position: relative;
+    display: block;
+    padding: 10px 0;
+}
+
+.section-link a::after {
+    content: "↗";
+    position: absolute;
+    right: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+}
+
+.section-link a:hover {
+    color: #eb627f !important;
+    transform: translateY(-2px);
+}
+
+.section-link a:hover::after {
+    opacity: 1;
+    right: -40px;
+    color: #eb627f;
+}
+
+.block {
+    display: flex;
+    align-items: center;
+    margin-bottom: 60px;
+    flex-wrap: wrap;
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: all 0.6s ease-out;
+}
+
+section.animate-in .block:nth-child(1) { transition-delay: 0.4s; }
+section.animate-in .block:nth-child(2) { transition-delay: 0.5s; }
+section.animate-in .block:nth-child(3) { transition-delay: 0.6s; }
+section.animate-in .block:nth-child(4) { transition-delay: 0.7s; }
+
+section.animate-in .block {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.block:nth-of-type(odd) .text { order: 1; text-align: left; }
+.block:nth-of-type(odd) img { order: 2; }
+.block:nth-of-type(even) .text { order: 2; text-align: right; }
+.block:nth-of-type(even) img { order: 1; }
+
+.block .text { width: 45%; padding: 10px; }
+.block img { width: 45%; border-radius: 15px; height: 250px; object-fit: cover; }
+
+/* BROCHURE BUTTON */
+.brochure-button {
+    width: 45%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #eb627f, #c8506a);
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 16px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    box-shadow: 0 6px 20px rgba(235, 98, 127, 0.4);
+    margin: 10px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    text-align: center;
+    padding: 0 20px;
+    border: none;
+    line-height: 1.2;
+}
+
+.brochure-button:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 30px rgba(235, 98, 127, 0.6);
+    background: linear-gradient(135deg, #c8506a, #eb627f);
+}
+
+.block:nth-of-type(odd) .brochure-button { order: 1; }
+.block:nth-of-type(even) .brochure-button { order: 1; }
+.block:nth-of-type(odd) .text { order: 2; text-align: right; }
+.block:nth-of-type(even) .text { order: 2; text-align: right; }
+
+footer {
+    background: radial-gradient(circle at top left, #24326b, #1a253d);
+    color: #d0d0d0;
+    padding: 15px 20px;
+    text-align: center;
+}
+
+.footer-container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 80px;
+    text-align: left;
+}
+
+.footer-col {
+    flex: 0 0 280px;
+    min-width: 280px;
+}
+
+.footer-col h3, .footer-col h4 {
+    color: #eb627f;
+    margin-bottom: 12px;
+    font-size: 1.3rem;
+    position: relative;
+}
+
+.footer-col h3::after, .footer-col h4::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 40px;
+    height: 3px;
+    background: linear-gradient(90deg, #eb627f, #24326b);
+    border-radius: 2px;
+}
+
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-col ul li { margin: 10px 0; }
+
+.footer-col a {
+    color: #d0d0d0;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.footer-col a:hover {
+    color: #eb627f;
+    text-shadow: 0 0 12px rgba(235, 98, 127, 0.6);
+    transform: translateX(4px);
+}
+
+/* RESPONSIVE */
+@media(max-width: 768px){
+    nav { padding: 0 20px; height: 70px; }
+    nav .logo { height: 45px; }
+    nav .nav-menu { gap: 24px; font-size: 14px; }
+    section.fermata { padding: 40px 20px; }
+    .block { flex-direction: column; text-align: center; }
+    .block .text, .block img, .brochure-button { width: 100%; order: unset !important; margin: 20px 0; }
+    .footer-container { flex-direction: column; gap: 40px; text-align: center; }
+}
+
+/* CONTENITORE BLOCCO CON TITOLO */
+.content-block {
+    margin-bottom: 80px;
+}
+
+/* TITOLO CENTRATO */
+.block-title {
+    text-align: center;
+    font-size: 1.6rem;
+    margin-bottom: 30px;
+    color: #2F2F2F;
+    position: relative;
+}
+
+.block-title::after {
+    content: "";
+    display: block;
+    width: 50px;
+    height: 3px;
+    margin: 12px auto 0;
+    background: linear-gradient(90deg, #eb627f, #24326b);
+    border-radius: 2px;
+}
+
+/* ALTERNANZA AUTOMATICA SINISTRA / DESTRA */
+.content-block:nth-of-type(even) .block {
+    flex-direction: row-reverse;
+}
+
+.content-block:nth-of-type(even) .text {
+    text-align: right;
+}
+
+/* ===== CHAT STYLE ===== */
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 60px;
+}
+
+.chat-message {
+    display: flex;
+    align-items: flex-end;
+    max-width: 85%;
+}
+
+.chat-message.left {
+    justify-content: flex-start;
+}
+
+.chat-message.right {
+    justify-content: flex-end;
+    align-self: flex-end;
+}
+
+/* Avatar */
+.chat-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #24326b, #eb627f);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+/* Bubble */
+.chat-bubble {
+    padding: 14px 18px;
+    border-radius: 18px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    max-width: 100%;
+}
+
+/* Sinistra */
+.chat-message.left .chat-avatar {
+    margin-right: 12px;
+}
+
+.chat-message.left .chat-bubble {
+    background: #ffffff;
+    color: #2F2F2F;
+    border-top-left-radius: 4px;
+}
+
+/* Destra */
+.chat-message.right .chat-avatar {
+    margin-left: 12px;
+    order: 2;
+}
+
+.chat-message.right .chat-bubble {
+    background: linear-gradient(135deg, #24326b, #1a253d);
+    color: #ffffff;
+    border-top-right-radius: 4px;
+}
+
+/* Mobile */
+@media(max-width: 768px){
+    .chat-message {
+        max-width: 100%;
+    }
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAVBAR MULTIPAGINA -->
+<nav>
+    <div class="logo">
+        <img src="Logo.png" alt="Stand Up for Education">
+    </div>
+    <ul class="nav-menu">
+        <li><a href="Granada.html">Home Granada</a></li>
+        <li><a href="stage-linguistico.html">Stage Linguistico</a></li>
+        <li><a href="erasmus.html">Erasmus+</a></li>
+    </ul>
+</nav>
+
+
+<!-- SEZIONE CONTENUTI PRINCIPALE -->
+<section id="contenuti" class="fermata">
+
+    -<div class="content-block">
+    <h3 class="block-title">Patrimonio culturale unico</h3>
+
+    <div class="chat-container">
+
+        <!-- Messaggio sinistra -->
+        <div class="chat-message left">
+            <div class="chat-avatar">👤</div>
+            <div class="chat-bubble">
+                Ho sentito dire che Granada è bellissima, ma cosa la rende così speciale dal punto di vista culturale?
+            </div>
+        </div>
+
+        <!-- Messaggio destra -->
+        <div class="chat-message right">
+            <div class="chat-avatar">👤</div>
+            <div class="chat-bubble">
+                Granada ha una storia millenaria, con influenze arabe, cristiane ed ebraiche ancora evidenti nel centro storico. Puoi visitare l’Alhambra, patrimonio UNESCO, passeggiare nell’Albaicín e scoprire musei come quello sefardita, che raccontano secoli di cultura e tradizioni locali.
+            </div>
+        </div>
+
+        <!-- Messaggio sinistra -->
+        <div class="chat-message left">
+            <div class="chat-avatar">👤</div>
+            <div class="chat-bubble">
+                Quindi non è solo una città dove si studia, ma anche si vive la storia!
+            </div>
+        </div>
+
+        <!-- Messaggio destra -->
+        <div class="chat-message right">
+            <div class="chat-avatar">👤</div>
+            <div class="chat-bubble">
+                Esatto! Questa ricchezza culturale è una parte fondamentale del nostro percorso linguistico, perché imparare una lingua significa anche conoscere la storia e l’identità del luogo.
+            </div>
+        </div>
+
+        <div class="chat-message left">
+            <div class="chat-avatar">👤</div>
+            <div class="chat-bubble">
+                Per cui la cultura locale fa parte del programma di studio?
+            </div>
+        </div>
+
+        <!-- Messaggio destra -->
+        <div class="chat-message right">
+            <div class="chat-avatar">👤</div>
+            <div class="chat-bubble">
+                Sì, le attività culturali sono integrate nel percorso formativo: visite guidate, passeggiate storiche e momenti di scoperta che rendono l’apprendimento più autentico e coinvolgente.
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+    <div class="content-block">
+    <h3 class="block-title">Full immersion nella lingua</h3>
+
+    <div class="chat-container">
+
+        <!-- Messaggio sinistra -->
+        <div class="chat-message left">
+            <div class="chat-avatar">👤</div>
+            <div class="chat-bubble">
+                Ma come funziona l’apprendimento linguistico durante lo stage?
+            </div>
+        </div>
+
+        <!-- Messaggio destra -->
+        <div class="chat-message right">
+            <div class="chat-avatar">👤</div>
+            <div class="chat-bubble">
+                Con Stand Up Education organizziamo programmi dove l’uso della lingua è continuo e reale, dentro e fuori dalle lezioni. Ci immergi nel contesto quotidiano, parlando con locali, vivendo con famiglie o in ambienti dove lo spagnolo è la lingua principale.
+            </div>
+        </div>
+
+        <!-- Messaggio sinistra -->
+        <div class="chat-message left">
+            <div class="chat-avatar">👤</div>
+            <div class="chat-bubble">
+                Quindi non è solo imparare in classe?
+            </div>
+        </div>
+
+        <!-- Messaggio destra -->
+        <div class="chat-message right">
+            <div class="chat-avatar">👤</div>
+            <div class="chat-bubble">
+                Esatto! È una full immersion linguistica: ogni conversazione, ogni attività culturale diventa un’opportunità per migliorare lo spagnolo in modo naturale, oltre le lezioni tradizionali
+            </div>
+        </div>
+
+        <!-- Messaggio sinistra -->
+        <div class="chat-message left">
+            <div class="chat-avatar">👤</div>
+            <div class="chat-bubble">
+                È adatto anche a chi non ha un livello alto di spagnolo?
+            </div>
+        </div>
+
+        <!-- Messaggio destra -->
+        <div class="chat-message right">
+            <div class="chat-avatar">👤</div>
+            <div class="chat-bubble">
+                Certo. L’immersione linguistica aiuta proprio a superare le insicurezze iniziali, favorendo un apprendimento naturale e progressivo.
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="content-block">
+    <h3 class="block-title">Città sicura e accogliente</h3>
+
+    <div class="chat-container">
+
+        <!-- Messaggio sinistra -->
+        <div class="chat-message left">
+            <div class="chat-avatar">👤</div>
+            <div class="chat-bubble">
+                Granada è una città tranquilla per studenti internazionali?
+            </div>
+        </div>
+
+        <!-- Messaggio destra -->
+        <div class="chat-message right">
+            <div class="chat-avatar">👤</div>
+            <div class="chat-bubble">
+                Sì. Granada è considerata una città accogliente e relativamente sicura, con una forte presenza studentesca e un ambiente ideale per chi è alla prima esperienza fuori da casa.
+            </div>
+        </div>
+
+        <!-- Messaggio sinistra -->
+        <div class="chat-message left">
+            <div class="chat-avatar">👤</div>
+            <div class="chat-bubble">
+                È facile ambientarsi per chi parte per la prima volta?
+            </div>
+        </div>
+
+        <!-- Messaggio destra -->
+        <div class="chat-message right">
+            <div class="chat-avatar">👤</div>
+            <div class="chat-bubble">
+                Molto facile. Granada ha un ritmo di vita rilassato e una comunità aperta, che aiuta gli studenti a sentirsi subito a casa.
+            </div>
+        </div>
+
+        <!-- Messaggio sinistra -->
+        <div class="chat-message left">
+            <div class="chat-avatar">👤</div>
+            <div class="chat-bubble">
+                Ci sarà supporto durante il soggiorno?
+            </div>
+        </div>
+
+        <!-- Messaggio destra -->
+        <div class="chat-message right">
+            <div class="chat-avatar">👤</div>
+            <div class="chat-bubble">
+                Sì, il nostro team accompagna gli studenti in ogni fase, garantendo assistenza e serenità durante tutta l’esperienza.
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="content-block">
+    <h3 class="block-title">Esperienza formativa completa</h3>
+
+    <div class="chat-container">
+
+        <!-- Messaggio sinistra -->
+        <div class="chat-message left">
+            <div class="chat-avatar">👤</div>
+            <div class="chat-bubble">
+                Che cosa distingue davvero i vostri stage dalle normali vacanze studio?
+            </div>
+        </div>
+
+        <!-- Messaggio destra -->
+        <div class="chat-message right">
+            <div class="chat-avatar">👤</div>
+            <div class="chat-bubble">
+                I nostri programmi sono pensati come esperienze formative complete. Oltre alle lezioni, organizziamo attività culturali, escursioni e momenti di interazione reale con la lingua e con la comunità.
+            </div>
+        </div>
+
+        <!-- Messaggio sinistra -->
+        <div class="chat-message left">
+            <div class="chat-avatar">👤</div>
+            <div class="chat-bubble">
+                È un’esperienza utile anche per il futuro?
+            </div>
+        </div>
+
+        <!-- Messaggio destra -->
+        <div class="chat-message right">
+            <div class="chat-avatar">👤</div>
+            <div class="chat-bubble">
+                Sì, perché migliora le competenze linguistiche, arricchisce il curriculum e sviluppa abilità fondamentali come comunicazione e adattamento.
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-container">
+        <div class="footer-col brand">
+            <h3>Stand Up for Education</h3>
+            <p>Viaggi studio e esperienze reali all'estero che uniscono cultura e apprendimento linguistico.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Contatti</h4>
+            <ul>
+                <li><a href="mailto:hello@standupeducation.es">📩 hello@standupeducation.es</a></li>
+                <li><a href="tel:+34858701273">📞 +34 858 701 273</a></li>
+                <li><a href="https://standupeducation.es">🌐 standupeducation.es</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+<script>
+// Animazioni scroll
+const sections = document.querySelectorAll('section.fermata');
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
+        }
+    });
+}, { threshold: 0.1 });
+
+sections.forEach(section => observer.observe(section));
+
+// Navbar scroll effect
+window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    nav.classList.toggle('scrolled', window.scrollY > 30);
+});
+</script>
+
+</body>
+</html>
