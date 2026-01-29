@@ -7,12 +7,11 @@
 <title>Granada - Stand Up for Education</title>
 <style>
 
-    /* Font */
+    /* ================= FONT ================= */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 html {
     scroll-behavior: smooth;
-    font-size: 16px;
 }
 
 body {
@@ -25,7 +24,7 @@ body {
         linear-gradient(180deg, #0E1118 0%, #121826 40%, #1A253D 100%);
 }
 
-/* NAVBAR */
+/* ================= NAVBAR ================= */
 nav {
     position: fixed;
     top: 0;
@@ -68,6 +67,7 @@ nav .logo img:hover {
     filter: drop-shadow(0 0 16px rgba(255,255,255,1));
 }
 
+/* Menu NAV centrato */
 nav .nav-menu {
     position: absolute;
     left: 50%;
@@ -96,6 +96,7 @@ nav .nav-menu a {
     white-space: nowrap;
 }
 
+/* Underline animata */
 nav .nav-menu a::after {
     content: "";
     position: absolute;
@@ -126,7 +127,7 @@ nav .nav-menu a.active::after {
     width: 100%;
 }
 
-/* Timeline */
+/* ================= TIMELINE ================= */
 .timeline {
     position: fixed;
     left: 30px;
@@ -143,20 +144,15 @@ nav .nav-menu a.active::after {
     position: absolute;
     left: 30px;
     width: 6px;
-    height: 100%;
+    height: 0;
     background: linear-gradient(-45deg, #eb627f, #24326b, #eb627f, #24326b);
     background-size: 400% 400%;
     border-radius: 3px;
     box-shadow: 0 0 20px rgba(235, 98, 127, 0.8);
     z-index: 1;
     transform-origin: top;
+    transition: height 0.2s ease-out, top 0.2s ease-out;
     animation: shimmer 3s ease-in-out infinite;
-}
-
-@keyframes shimmer {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
 }
 
 .timeline-bus {
@@ -166,11 +162,12 @@ nav .nav-menu a.active::after {
     height: 36px;
     background: linear-gradient(135deg, #eb627f, #c8506a);
     border-radius: 50% 50% 60% 40%;
-    box-shadow: 0 6px 16px rgba(235, 98, 127, 0.9), inset 0 2px 4px rgba(255,255,255,0.3);
+    box-shadow: 0 6px 16px rgba(235, 98, 127, 0.9),
+                inset 0 2px 4px rgba(255,255,255,0.3);
     z-index: 3;
     opacity: 0;
     transform: translateY(-50%) scale(0.8);
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     animation: busBounce 1.5s ease-in-out infinite;
 }
 
@@ -181,11 +178,12 @@ nav .nav-menu a.active::after {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 22px;
+    z-index: 4;
 }
 
-@keyframes busBounce {
-    0%, 100% { transform: translateY(-50%) scale(0.9); }
-    50% { transform: translateY(-58%) scale(1.08); }
+.timeline-bus.active {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.05);
 }
 
 .timeline-point {
@@ -197,6 +195,8 @@ nav .nav-menu a.active::after {
     background: #ffffff;
     border: 3px solid #C0C0C0;
     box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -207,7 +207,13 @@ nav .nav-menu a.active::after {
     z-index: 2;
 }
 
-/* Sections */
+.timeline-point:hover {
+    transform: scale(1.3) !important;
+    border-color: #24326b;
+    background: linear-gradient(135deg, #eb627f, #c8506a);
+}
+
+/* ================= SEZIONI ================= */
 section {
     max-width: 900px;
     margin: auto;
@@ -230,7 +236,12 @@ section h2 {
     color: #2F2F2F;
 }
 
-/* Block cards */
+section.fermata {
+    background-color: #f7f7f7;
+    border-left: 4px solid #C0C0C0;
+    padding-left: 40px;
+}
+
 .block {
     display: flex;
     align-items: center;
@@ -241,9 +252,40 @@ section h2 {
     transition: all 0.6s ease-out;
 }
 
+/* CARD AVANZATO */
+section.fermata .block {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 28px;
+    align-items: stretch;
+    margin-bottom: 40px;
+    padding: 22px 24px;
+    border-radius: 22px;
+    background:
+        radial-gradient(circle at top left, rgba(235,98,127,0.25), transparent 45%),
+        radial-gradient(circle at bottom right, rgba(36,50,107,0.30), transparent 55%),
+        linear-gradient(145deg, rgba(18,24,38,0.95), rgba(14,17,24,0.98));
+    border: 1px solid rgba(235,98,127,0.18);
+    backdrop-filter: blur(16px);
+    overflow: hidden;
+    transform: translateY(16px);
+    opacity: 0;
+    transition: transform 0.45s cubic-bezier(0.19, 1, 0.22, 1),
+                box-shadow 0.45s ease,
+                border-color 0.45s ease,
+                background 0.45s ease,
+                opacity 0.45s ease;
+}
+
+section.animate-in .block {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .block .text {
     width: 100%;
-    padding: 6px 6px;
+    padding: 6px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -251,6 +293,7 @@ section h2 {
 }
 
 .block .text h3 {
+    margin: 0;
     font-size: 1.15rem;
     font-weight: 700;
     background: linear-gradient(90deg, #ffffff, #eb627f);
@@ -258,22 +301,35 @@ section h2 {
     -webkit-text-fill-color: transparent;
 }
 
-.block img {
-    width: 100%;
-    max-height: 230px;
-    border-radius: 18px;
-    object-fit: cover;
-    box-shadow: 0 16px 34px rgba(0,0,0,0.7);
+.block .text p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #d6d6d6;
 }
 
-/* Hero */
+/* IMMAGINI RESPONSIVE */
+.block img {
+    width: 100%;
+    height: auto;
+    border-radius: 18px;
+    object-fit: cover;
+}
+
+/* ALTERNANZA SINISTRA/DESSTRA */
+.block:nth-of-type(odd) .text { order: 1; text-align: left; }
+.block:nth-of-type(odd) img  { order: 2; }
+.block:nth-of-type(even) .text { order: 2; text-align: right; }
+.block:nth-of-type(even) img  { order: 1; }
+
+/* HERO */
 .hero-background {
     width: 100%;
     height: 600px;
     background: url(foto.jpeg) no-repeat center/cover;
 }
 
-/* Bus-bar */
+/* BUS BAR */
 .bus-bar {
     width: 100%;
     height: 70px;
@@ -284,48 +340,61 @@ section h2 {
     color: #fff;
     font-weight: 700;
     font-size: 22px;
-    position: relative;
     cursor: pointer;
 }
 
-/* Footer */
+/* FOOTER */
 footer {
     background: radial-gradient(circle at top left, #24326b, #1a253d);
     color: #d0d0d0;
     padding: 15px 20px;
+    font-family: "Roboto", sans-serif;
 }
 
-.footer-container {
-    max-width: 900px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 40px;
-    text-align: center;
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-    section { padding-left: 60px; padding-right: 20px; }
-    .block { flex-direction: column; text-align: center; }
-}
-
+/* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
-    nav { padding: 0 20px; height: 70px; }
-    nav .logo { height: 45px; }
-    nav .nav-menu { gap: 16px; font-size: 14px; position: static; transform: none; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
-    section { padding-left: 20px; padding-right: 20px; }
-    .timeline { display: none; }
-    .block { flex-direction: column; }
-    .block .text, .block img { width: 100%; order: unset !important; text-align: center; }
-}
+    nav {
+        padding: 0 15px;
+        height: auto;
+        flex-direction: column;
+        align-items: center;
+    }
+    nav .nav-menu {
+        position: static;
+        transform: none;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 8px;
+    }
+    nav .nav-menu a {
+        font-size: 13px;
+    }
+    
+    section {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 
-@media (max-width: 480px) {
-    section h2 { font-size: 2rem; margin-bottom: 40px; }
-    .block .text h3 { font-size: 1rem; }
-    .bus-bar { font-size: 18px; height: 60px; }
-    .hero-background { height: 400px; }
+    .block {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .block .text, .block img {
+        width: 100%;
+        order: unset !important;
+        text-align: center;
+    }
+
+    .timeline {
+        display: none; /* timeline nascosta su mobile */
+    }
+
+    .hero-background {
+        height: 400px;
+    }
 }
 
 
@@ -717,6 +786,7 @@ window.addEventListener('resize', updateRoad);
 
 </body>
 </html>
+
 
 
 
